@@ -11,26 +11,25 @@ thirst = 15
 time = 12
 beg_passive = 5
 beg_agressive = 8
+name = ""
 ripped_shirt = False
 ripped_pants = False
-bandage = 0
-medkit = 0
 main_menu_bool = False
 
 
 def main_menu():
   print("-")
   print("Hobo Sim 0.01")
-  print("1) Play")
-  print("2) Info")
-  print("3) Exit")
+  print("1) New Game")
+  print("2) Load Game")
+  print("3) Info")
+  print("4) Exit")
   player_input = input()
   return player_input
 
 def main_menu_info():
   print("-\nIn Hobo Sim, you are a Hobo\nYour goal is to become the richest man alive\nHow you get there is your choice....")
   
-
 def main():
   global hp
   global money
@@ -48,6 +47,7 @@ def main():
   print("3) Go to Store")
   print("4) Open Backpack")
   print("5) Go to Sleep")
+  print("6) Save Game")
   player_input = input()
   if player_input == "1": #Beg Passively
     beg_passively()
@@ -73,6 +73,8 @@ def main():
     backpack()
   elif player_input == "5":
     sleep()
+  elif player_input == "6":
+    save_game()
   else:
     main()  
 
@@ -291,6 +293,28 @@ def backpack_beverages():
     
 def sleep():
   print("LOL")
+
+def save_game():
+  global hp 
+  global money
+  global burger
+  global water
+  global bandage
+  global medkit
+  global sanity
+  global hunger
+  global thirst
+  global time
+  global beg_passive
+  global beg_agressive
+  global ripped_shirt
+  global ripped_pants
+  global bandage
+  global medkit
+  save = open(name + ".txt", "w+")
+  save.writelines([str(hp), str(money), str(burger), str(water), str(bandage), str(medkit), str(sanity), str(hunger), str(thirst), str(time), str(beg_passive), str(beg_agressive), str(ripped_pants), str(ripped_shirt)])
+
+
   
 while True:
   while not(main_menu_bool):
@@ -305,8 +329,12 @@ while True:
     else:
       main_menu()
 
-  while hp > 0 and time < 24 and hunger > 0 and thirst > 0 and sanity > 0 and main_menu_bool:
+  while hp > 0 and time < 24 and hunger > 0 and thirst > 0 and sanity > 0 and main_menu_bool and name != "":
     main()
+
+  if name == "":
+    print("What is your Name?")
+    name = input()
 
   if hp <= 0 or hunger <= 0 or thirst <= 0:
     print("You have died!")
