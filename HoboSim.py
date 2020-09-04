@@ -16,7 +16,8 @@ ripped_pants = False
 bandage = 0
 medkit = 0
 main_menu_bool = False
-has_items = True
+has_food = True
+has_beverage = True
 
 def main_menu():
   print("-")
@@ -135,7 +136,8 @@ def store_food():
   global burger
   global water
   global money
-  global has_items
+  global has_food
+  global has_beverage
   burger_cost = 15
   water_cost = 15
   print("-")
@@ -150,7 +152,7 @@ def store_food():
   if player_input == "1" and money >= burger_cost: #If can buy Burger
     burger += 1
     money -= 15
-    has_items = True
+    has_food = True
     print("You buy a Burger")
     print("You gain 1 Burger")
     print("You lose " + str(burger_cost) + " Dollars")
@@ -158,7 +160,7 @@ def store_food():
   elif player_input == "2" and money >= water_cost: #If can buy Water
     water += 1
     money -= 15
-    has_items = True
+    has_beverage = True
     print("You buy a Water")
     print("You gain 1 Water")
     print("You lose" + str(water_cost) + " Dollars")
@@ -273,7 +275,7 @@ def backpack():
   elif player_input == "3":
     backpack_clothing()
   elif player_input == "4":
-    backpack_medical
+    backpack_medical()
   elif player_input == "5":
     main()
   else:
@@ -282,17 +284,16 @@ def backpack():
 def backpack_food():
   global burger  #put all food items under here
   global hunger
-  global thirst
-  global has_items
+  global has_food
   #steak = 0
   #bigmac = 2
 
   number_of_items = []
-  if not(has_items):
+  if not(has_food):
     number_of_items.append("1) ")
     number_of_items.append("Go Back")
   print("-")
-  if not(has_items):
+  if not(has_food):
     print("You have no Food items")
   if burger >= 1: 
     print("Burgers: " + str(burger))
@@ -305,7 +306,7 @@ def backpack_food():
       #number_of_items.append("Use Steak")
     #else:
       #number_of_items.append("2) ")
-      #number_of_items.append("Use Steak")
+      #number_of_items.append("Use Steak")     ALL COMMENTED CODE IS EXAMPLE FOR WHEN NEW FOOD ITEMS ARE EVENTUALLY ADDED TO THE GAME
   #if bigmac >= 1:
     #print("BigMacs: " + str(bigmac))
     #if len(number_of_items) == 0:
@@ -318,14 +319,14 @@ def backpack_food():
       #number_of_items.append("3) ")
       #number_of_items.append("Use BigMac") 
   print("What will you do?")
-  if len(number_of_items) >= 2:
+  if len(number_of_items) >= 2:  #Must add another if statement when adding new food item
     print(number_of_items[0] + number_of_items[1])
-  if len(number_of_items) >= 4:
-    print(number_of_items[2] + number_of_items[3])
-  if len(number_of_items) >= 6:
-    print(number_of_items[4] + number_of_items[5])
+  #if len(number_of_items) >= 4:
+    #print(number_of_items[2] + number_of_items[3])
+  #if len(number_of_items) >= 6:
+    #print(number_of_items[4] + number_of_items[5])
   else:
-    has_items = False
+    has_food = False
     backpack_food()
   player_input = input()
   if player_input == "1":
@@ -337,6 +338,41 @@ def backpack_food():
       print("You lose a Burger")
       print("You gain 7 Hunger")
       backpack_food()
+    elif number_of_items[1] == "Go Back":
+      backpack()
+
+def backpack_beverages():
+  global water  #put all beverage items under here
+  global thirst
+  global has_beverage
+
+  number_of_items = []
+  if not(has_beverage):
+    number_of_items.append("1) ")
+    number_of_items.append("Go Back")
+  print("-")
+  if not(has_beverage):
+    print("You have no Beverage items")
+  if water >= 1: 
+    print("Waters: " + str(water))
+    number_of_items.append("1) ")
+    number_of_items.append("Use Water")
+  print("What will you do?")
+  if len(number_of_items) >= 2:  #Must add another if statement when adding new food item
+    print(number_of_items[0] + number_of_items[1])
+  else:
+    has_beverage = False
+    backpack_beverages()
+  player_input = input()
+  if player_input == "1":
+    if number_of_items[1] == "Use Water":
+      water -= 1
+      thirst += 5
+      print("-")
+      print("You drink some Water")
+      print("You lose a Water")
+      print("You gain 5 Thirst")
+      backpack_beverages()
     elif number_of_items[1] == "Go Back":
       backpack()
     
