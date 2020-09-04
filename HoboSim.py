@@ -16,8 +16,7 @@ ripped_pants = False
 bandage = 0
 medkit = 0
 main_menu_bool = False
-has_food = True
-has_beverage = True
+
 
 def main_menu():
   print("-")
@@ -136,7 +135,6 @@ def store_food():
   global burger
   global water
   global money
-  global has_food
   global has_beverage
   burger_cost = 15
   water_cost = 15
@@ -152,7 +150,6 @@ def store_food():
   if player_input == "1" and money >= burger_cost: #If can buy Burger
     burger += 1
     money -= 15
-    has_food = True
     print("You buy a Burger")
     print("You gain 1 Burger")
     print("You lose " + str(burger_cost) + " Dollars")
@@ -284,97 +281,13 @@ def backpack():
 def backpack_food():
   global burger  #put all food items under here
   global hunger
-  global has_food
-  #steak = 0
-  #bigmac = 2
-
-  number_of_items = []
-  if not(has_food):
-    number_of_items.append("1) ")
-    number_of_items.append("Go Back")
-  print("-")
-  if not(has_food):
-    print("You have no Food items")
-  if burger >= 1: 
-    print("Burgers: " + str(burger))
-    number_of_items.append("1) ")
-    number_of_items.append("Use Burger")
-  #if steak >= 1:
-    #print("Steaks: " + str(steak))
-    #if len(number_of_items) == 0:
-      #number_of_items.append("1) ")
-      #number_of_items.append("Use Steak")
-    #else:
-      #number_of_items.append("2) ")
-      #number_of_items.append("Use Steak")     ALL COMMENTED CODE IS EXAMPLE FOR WHEN NEW FOOD ITEMS ARE EVENTUALLY ADDED TO THE GAME
-  #if bigmac >= 1:
-    #print("BigMacs: " + str(bigmac))
-    #if len(number_of_items) == 0:
-      #number_of_items.append("1) ")
-      #number_of_items.append("Use BigMac")
-    #elif len(number_of_items) == 2:
-      #number_of_items.append("2) ")
-      #number_of_items.append("Use BigMac")
-    #else:
-      #number_of_items.append("3) ")
-      #number_of_items.append("Use BigMac") 
-  print("What will you do?")
-  if len(number_of_items) >= 2:  #Must add another if statement when adding new food item
-    print(number_of_items[0] + number_of_items[1])
-  #if len(number_of_items) >= 4:
-    #print(number_of_items[2] + number_of_items[3])
-  #if len(number_of_items) >= 6:
-    #print(number_of_items[4] + number_of_items[5])
-  else:
-    has_food = False
-    backpack_food()
-  player_input = input()
-  if player_input == "1":
-    if number_of_items[1] == "Use Burger":
-      burger -= 1
-      hunger += 7
-      print("-")
-      print("You eat a Burger")
-      print("You lose a Burger")
-      print("You gain 7 Hunger")
-      backpack_food()
-    elif number_of_items[1] == "Go Back":
-      backpack()
+  backpack_food()
 
 def backpack_beverages():
   global water  #put all beverage items under here
   global thirst
-  global has_beverage
-
-  number_of_items = []
-  if not(has_beverage):
-    number_of_items.append("1) ")
-    number_of_items.append("Go Back")
-  print("-")
-  if not(has_beverage):
-    print("You have no Beverage items")
-  if water >= 1: 
-    print("Waters: " + str(water))
-    number_of_items.append("1) ")
-    number_of_items.append("Use Water")
-  print("What will you do?")
-  if len(number_of_items) >= 2:  #Must add another if statement when adding new food item
-    print(number_of_items[0] + number_of_items[1])
-  else:
-    has_beverage = False
-    backpack_beverages()
-  player_input = input()
-  if player_input == "1":
-    if number_of_items[1] == "Use Water":
-      water -= 1
-      thirst += 5
-      print("-")
-      print("You drink some Water")
-      print("You lose a Water")
-      print("You gain 5 Thirst")
-      backpack_beverages()
-    elif number_of_items[1] == "Go Back":
-      backpack()
+  backpack_beverages()
+  
     
 def sleep():
   print("LOL")
