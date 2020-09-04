@@ -18,6 +18,36 @@ main_menu_bool = False
 
 
 def main_menu():
+  global hp 
+  global money
+  global burger
+  global water
+  global bandage
+  global medkit
+  global sanity
+  global hunger
+  global thirst
+  global time
+  global beg_passive
+  global beg_agressive
+  global ripped_shirt
+  global ripped_pants
+  global bandage
+  global medkit
+  hp = 20
+  money = 3
+  burger = 2
+  water = 1
+  bandage = 0
+  medkit = 0
+  sanity = 10
+  hunger = 20
+  thirst = 15
+  time = 12
+  beg_passive = 5
+  beg_agressive = 8
+  ripped_shirt = False
+  ripped_pants = False
   print("-")
   print("Hobo Sim 0.01")
   print("1) New Game")
@@ -37,6 +67,8 @@ def main():
   global hunger
   global thirst
   global time
+  global main_menu_bool
+  global name
   print("-")
   print("-- Health: " + str(hp) + " -- Hunger: " + str(hunger) + " -- Thirst: " + str(thirst) + " -- Sanity: " + str(sanity) + " --")
   print("-- Time: " + str(time) + " --")
@@ -48,6 +80,7 @@ def main():
   print("4) Open Backpack")
   print("5) Go to Sleep")
   print("6) Save Game")
+  print("7) Main Menu")
   player_input = input()
   if player_input == "1": #Beg Passively
     beg_passively()
@@ -75,6 +108,18 @@ def main():
     sleep()
   elif player_input == "6":
     save_game()
+  elif player_input == "7":
+    print("-")
+    print("Are you sure you want to go to the Main Menu?")
+    print("You will lose any unsaved progress")
+    print("1) Yes")
+    print("2) No")
+    player_input = input()
+    if player_input == "1":
+      main_menu_bool = False
+      main_menu()
+    else:
+      main()
   else:
     main()  
 
@@ -311,8 +356,15 @@ def save_game():
   global ripped_pants
   global bandage
   global medkit
-  save = open(name + ".txt", "w+")
-  save.writelines([str(hp), str(money), str(burger), str(water), str(bandage), str(medkit), str(sanity), str(hunger), str(thirst), str(time), str(beg_passive), str(beg_agressive), str(ripped_pants), str(ripped_shirt)])
+  print("-")
+  print("Are you sure you want to Save?")
+  print("You will lose all previous Saves")
+  print("1) Yes")
+  print("2) No")
+  player_input = input()
+  if player_input == "1":
+    save = open(name + ".txt", "w+")
+    save.writelines([str(hp) + "\n", str(money) + "\n", str(burger) + "\n", str(water) + "\n", str(bandage) + "\n", str(medkit) + "\n", str(sanity) + "\n", str(hunger) + "\n", str(thirst) + "\n", str(time) + "\n", str(beg_passive) + "\n", str(beg_agressive) + "\n", str(ripped_pants) + "\n", str(ripped_shirt) + "\n"])
 
 
   
@@ -320,21 +372,42 @@ while True:
   while not(main_menu_bool):
     main_menu_input = main_menu()
     if main_menu_input == "1":
+      print("-")
+      print("What is your Name?")
+      name = input()
+      name = name.lower()
       main_menu_bool = True
       break
-    elif main_menu_input == "2":
-      main_menu_info()
+    if main_menu_input == "2":
+      print("-")
+      print("Enter the name of your Hobo")
+      save_name = input()
+      save_name = save_name.lower()
+      load = open(save_name + ".txt", "r")
+      hp = int(load.readline())
+      money = int(load.readline())
+      burger = int(load.readline())
+      water = int(load.readline())
+      bandage = int(load.readline())
+      medkit = int(load.readline())
+      sanity = int(load.readline())
+      hunger = int(load.readline())
+      thirst = int(load.readline())
+      time = int(load.readline())
+      beg_agressive = int(load.readline())
+      beg_passive = int(load.readline())
+      name = save_name
+      main_menu_bool = True
+      break
     elif main_menu_input == "3":
+      main_menu_info()
+    elif main_menu_input == "4":
       break
     else:
       main_menu()
 
   while hp > 0 and time < 24 and hunger > 0 and thirst > 0 and sanity > 0 and main_menu_bool and name != "":
     main()
-
-  if name == "":
-    print("What is your Name?")
-    name = input()
 
   if hp <= 0 or hunger <= 0 or thirst <= 0:
     print("You have died!")
