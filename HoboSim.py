@@ -358,13 +358,13 @@ def save_game():
   global medkit
   print("-")
   print("Are you sure you want to Save?")
-  print("You will lose all previous Saves")
+  print("You will lose all previous Saves under your Hobo name")
   print("1) Yes")
   print("2) No")
   player_input = input()
   if player_input == "1":
     save = open(name + ".txt", "w+")
-    save.writelines([str(hp) + "\n", str(money) + "\n", str(burger) + "\n", str(water) + "\n", str(bandage) + "\n", str(medkit) + "\n", str(sanity) + "\n", str(hunger) + "\n", str(thirst) + "\n", str(time) + "\n", str(beg_passive) + "\n", str(beg_agressive) + "\n", str(ripped_pants) + "\n", str(ripped_shirt) + "\n"])
+    save.writelines([str(hp) + "\n", str(money) + "\n", str(burger) + "\n", str(water) + "\n", str(bandage) + "\n", str(medkit) + "\n", str(sanity) + "\n", str(hunger) + "\n", str(thirst) + "\n", str(time) + "\n", str(beg_passive) + "\n", str(beg_agressive) + "\n", str(ripped_pants) + "\n", str(ripped_shirt) + "\n", "CHANGING THE VALUES IN THIS FILE MAY LEAD TO UNEXPECTED RESULTS OR MAY CORRUPT YOUR SAVE FILE!"])
 
 
   
@@ -396,6 +396,16 @@ while True:
       time = int(load.readline())
       beg_agressive = int(load.readline())
       beg_passive = int(load.readline())
+      pants = load.readline()
+      shirt = load.readline()
+      if pants[0] == "T":
+        ripped_pants = True
+      else:
+        ripped_pants = False
+      if shirt[0] == "T":
+        ripped_shirt = True
+      else:
+        ripped_shirt = False
       name = save_name
       main_menu_bool = True
       break
