@@ -182,7 +182,6 @@ def store_food():
   global burger
   global water
   global money
-  global has_beverage
   burger_cost = 15
   water_cost = 15
   print("-")
@@ -204,7 +203,6 @@ def store_food():
   elif player_input == "2" and money >= water_cost: #If can buy Water
     water += 1
     money -= 15
-    has_beverage = True
     print("You buy a Water")
     print("You gain 1 Water")
     print("You lose" + str(water_cost) + " Dollars")
@@ -328,14 +326,53 @@ def backpack():
 def backpack_food():
   global burger  #put all food items under here
   global hunger
+  has_burger = False
+  print("-")
+  if burger > 0: 
+    print("You have " + str(burger) + " Burgers") 
+    has_burger = True
+  print("What will you do?")
+  if has_burger:
+    print("1) Use Burger")
+  print("2) Go Back")
+  player_input = input()
+  if player_input == "1" and has_burger:
+    burger -= 1
+    hunger += 7
+    has_burger = False
+    print("-")
+    print("You eat a Burger")
+    print("You lose a Burger")
+    print("You gain 7 Hunger")
+  elif player_input == "2":
+    backpack()
   backpack_food()
 
 def backpack_beverages():
   global water  #put all beverage items under here
   global thirst
+  has_water = False
+  print("-")
+  if water > 0: 
+    print("You have " + str(water) + " Waters") 
+    has_water = True
+  print("What will you do?")
+  if has_water:
+    print("1) Use Water")
+  print("2) Go Back")
+  player_input = input()
+  if player_input == "1" and has_water:
+    water -= 1
+    thirst += 5
+    has_water = False
+    print("-")
+    print("You drink a Water")
+    print("You lose a Water")
+    print("You gain 5 Hunger")
+  elif player_input == "2":
+    backpack()
   backpack_beverages()
-  
-    
+
 def sleep():
   print("LOL")
 
