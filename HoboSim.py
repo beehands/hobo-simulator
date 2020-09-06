@@ -84,22 +84,8 @@ def main():
   player_input = input()
   if player_input == "1": #Beg Passively
     beg_passively()
-    print("-")
-    print("You decide to Beg Passively!")
-    print("You gain " + str(beg_passive) + " Dollars")
-    print("You lose 2 Hunger")
-    print("You lose 1 Thirst")
-    print("You lose 2 Sanity")
-    print("The Time is now " + str(time))
   elif player_input == "2": #Beg Agressively
     beg_agressively()
-    print("-")
-    print("You decide to Beg Agressively!")
-    print("You gain " + str(beg_agressive) + " Dollars")
-    print("You lose 1 Hunger")
-    print("You lose 0 Thirst")
-    print("You lose 1 Sanity")
-    print("The Time is now " + str(time))
   elif player_input == "3": #Store
     go_to_store()
   elif player_input == "4":
@@ -135,18 +121,36 @@ def beg_passively():
   hunger -= 2
   thirst -= 1
   sanity -= 2
+  print("-")
+  print("You decide to Beg Passively!")
+  print("You gain " + str(beg_passive) + " Dollars")
+  print("You lose 2 Hunger")
+  print("You lose 1 Thirst")
+  print("You lose 2 Sanity")
+  print("The Time is now " + str(time))
+  main()
 
 def beg_agressively():
   global time
   global money
   global hunger
+  global thirst
   global sanity
   global hp
+  global beg_agressive
   time += 1
   money += beg_agressive
   hunger -= 1
   hp -= 8
   sanity -= 1
+  print("-")
+  print("You decide to Beg Agressively!")
+  print("You gain " + str(beg_agressive) + " Dollars")
+  print("You lose 1 Hunger")
+  print("You lose 0 Thirst")
+  print("You lose 1 Sanity")
+  print("The Time is now " + str(time))
+
 
 def go_to_store():
   global money
@@ -155,6 +159,7 @@ def go_to_store():
     print("-")
     print("Torgot is Closed")
     print("Hours: 7 to 23")
+    main()
   else:  #Is Open
     print("-")
     print("Welcome to Torgot")
@@ -182,8 +187,8 @@ def store_food():
   global burger
   global water
   global money
-  burger_cost = 15
-  water_cost = 15
+  burger_cost = 8
+  water_cost = 8
   print("-")
   print("You have " + str(money) + " Dollars!")
   print("You read a sign, it says Food")
@@ -195,17 +200,17 @@ def store_food():
   player_input = input()
   if player_input == "1" and money >= burger_cost: #If can buy Burger
     burger += 1
-    money -= 15
+    money -= burger_cost
     print("You buy a Burger")
     print("You gain 1 Burger")
     print("You lose " + str(burger_cost) + " Dollars")
     store_food()
   elif player_input == "2" and money >= water_cost: #If can buy Water
     water += 1
-    money -= 15
+    money -= water_cost
     print("You buy a Water")
     print("You gain 1 Water")
-    print("You lose" + str(water_cost) + " Dollars")
+    print("You lose " + str(water_cost) + " Dollars")
     store_food()
   elif player_input == "1" and money < burger_cost or player_input == "2" and money < water_cost: #If cant buy Burger/Water
     print("-")
@@ -220,6 +225,8 @@ def store_clothes():
   global money
   global ripped_pants
   global ripped_shirt
+  global beg_agressive
+  global beg_passive
   ripped_pants_cost = 75
   ripped_shirt_cost = 60
   print("-")
@@ -239,8 +246,11 @@ def store_clothes():
     else:  #If doesnt have shirt and has enough money
       ripped_shirt = True
       money -= ripped_shirt_cost
+      beg_agressive += 2
+      beg_passive += 2
       print("You buy a Ripped Shirt")
       print("You gain 1 Ripped Shirt")
+      print("You will now gain 2 more dollars when Begging!")
       print("You lose " + str(ripped_shirt_cost) + " Dollars")
       store_clothes()
   elif player_input == "2" and money >= ripped_pants_cost:  #If has enough money for Pants
@@ -251,8 +261,11 @@ def store_clothes():
     else: #If doesnt have Pants and has enough money
       ripped_pants = True
       money -= ripped_pants_cost
+      beg_agressive += 2
+      beg_passive += 2
       print("You buy a Ripped Pants")
       print("You gain 1 Ripped Pants")
+      print("You will now gain 2 more dollars when Begging!")
       print("You lose " + str(ripped_pants_cost) + " Dollars")
       store_clothes()
   elif player_input == "3":  #Go back
@@ -279,16 +292,18 @@ def store_medical():
   if player_input == "1" and money >= bandage_cost: #If can buy Bandage
     bandage += 1
     money -= bandage_cost
+    print("-")
     print("You buy a Bandage")
     print("You gain 1 Bandage")
-    print("You lose" + str(bandage_cost) + " Dollars")
+    print("You lose " + str(bandage_cost) + " Dollars")
     store_medical()
   elif player_input == "2" and money >= medkit_cost: #If can buy Medkit
     medkit += 1
     money -= medkit_cost
+    print("-")
     print("You buy a Medkit")
     print("You gain 1 Medkit")
-    print("You lose" + str(medkit_cost) + " Dollars")
+    print("You lose " + str(medkit_cost) + " Dollars")
     store_medical()
   elif player_input == "1" and money < bandage_cost or player_input == "2" and money < medkit_cost: #If cant buy Bandage/Medkit
     print("-")
@@ -306,19 +321,16 @@ def backpack():
   print("What will you do?")
   print("1) Food")
   print("2) Beverages")
-  print("3) Clothing")
-  print("4) Medical")
-  print("5) Go Back")
+  print("3) Medical")
+  print("4) Go Back")
   player_input = input()
   if player_input == "1":
     backpack_food()
   elif player_input == "2":
     backpack_beverages()
   elif player_input == "3":
-    backpack_clothing()
-  elif player_input == "4":
     backpack_medical()
-  elif player_input == "5":
+  elif player_input == "4":
     main()
   else:
     backpack()
@@ -346,7 +358,8 @@ def backpack_food():
     print("You gain 7 Hunger")
   elif player_input == "2":
     backpack()
-  backpack_food()
+  else:
+    backpack_food()
 
 def backpack_beverages():
   global water  #put all beverage items under here
@@ -368,13 +381,81 @@ def backpack_beverages():
     print("-")
     print("You drink a Water")
     print("You lose a Water")
-    print("You gain 5 Hunger")
+    print("You gain 5 Thirst")
   elif player_input == "2":
     backpack()
-  backpack_beverages()
+  else:
+    backpack_beverages()
+
+def backpack_medical():
+  global bandage  #put all medical items under here
+  global medkit
+  global hp
+  has_bandage = False
+  has_medkit = False
+  print("-")
+  if bandage > 0: 
+    print("You have " + str(bandage) + " Bandages") 
+    has_bandage = True
+  if medkit > 0: 
+    print("You have " + str(medkit) + " Medkits") 
+    has_medkit = True
+  print("What will you do?")
+  if has_bandage:
+    print("1) Use Bandage")
+  if has_medkit:
+    print("2) Use Medkit")
+  print("3) Go Back")
+  player_input = input()
+  if player_input == "1" and has_bandage:
+    bandage -= 1
+    hp += 4
+    has_bandage = False
+    print("-")
+    print("You apply a Bandage")
+    print("You lose a Bandage")
+    print("You gain 4 Health")
+  elif player_input == "2" and has_medkit:
+    medkit -= 1
+    hp += 16
+    has_medkit = False
+    print("-")
+    print("You apply a Medkit")
+    print("You lose a Medkiy")
+    print("You gain 16 Health")
+  elif player_input == "3":
+    backpack()
+  else:
+    backpack_medical()
 
 def sleep():
-  print("LOL")
+  global time
+  global hp
+  global hunger
+  global thirst
+  global sanity
+  if time <= 17 and time > 6:
+    time += 5
+    sanity += 5
+    hunger -= 4
+    thirst -= 3 
+    print("-")
+    print("You decide to sleep for the day")
+    print("You gain 5 Sanity")
+    print("You lose 4 Hunger")
+    print("You lose 3 Thrist")
+    print("The time is now " + str(time)) 
+  else:
+    time += 9
+    sanity += 9
+    hunger -= 5
+    thirst -= 4 
+    print("-")
+    print("You decide to sleep for the night")
+    print("You gain 9 Sanity")
+    print("You lose 5 Hunger")
+    print("You lose 4 Thrist")
+    print("The time is now " + str(time))
 
 def save_game():
   global hp 
@@ -403,14 +484,12 @@ def save_game():
     save = open(name + ".txt", "w+")
     save.writelines([str(hp) + "\n", str(money) + "\n", str(burger) + "\n", str(water) + "\n", str(bandage) + "\n", str(medkit) + "\n", str(sanity) + "\n", str(hunger) + "\n", str(thirst) + "\n", str(time) + "\n", str(beg_passive) + "\n", str(beg_agressive) + "\n", str(ripped_pants) + "\n", str(ripped_shirt) + "\n", "CHANGING THE VALUES IN THIS FILE MAY LEAD TO UNEXPECTED RESULTS OR MAY CORRUPT YOUR SAVE FILE!"])
 
-
-  
 while True:
   while not(main_menu_bool):
     main_menu_input = main_menu()
     if main_menu_input == "1":
       print("-")
-      print("What is your Name?")
+      print("What will your name your Hobo?")
       name = input()
       name = name.lower()
       main_menu_bool = True
@@ -420,36 +499,45 @@ while True:
       print("Enter the name of your Hobo")
       save_name = input()
       save_name = save_name.lower()
-      load = open(save_name + ".txt", "r")
-      hp = int(load.readline())
-      money = int(load.readline())
-      burger = int(load.readline())
-      water = int(load.readline())
-      bandage = int(load.readline())
-      medkit = int(load.readline())
-      sanity = int(load.readline())
-      hunger = int(load.readline())
-      thirst = int(load.readline())
-      time = int(load.readline())
-      beg_agressive = int(load.readline())
-      beg_passive = int(load.readline())
-      pants = load.readline()
-      shirt = load.readline()
-      if pants[0] == "T":
-        ripped_pants = True
-      else:
-        ripped_pants = False
-      if shirt[0] == "T":
-        ripped_shirt = True
-      else:
-        ripped_shirt = False
-      name = save_name
-      main_menu_bool = True
-      break
+      try:
+        load = open(save_name + ".txt", "r")
+        hp = int(load.readline())
+        money = int(load.readline())
+        burger = int(load.readline())
+        water = int(load.readline())
+        bandage = int(load.readline())
+        medkit = int(load.readline())
+        sanity = int(load.readline())
+        hunger = int(load.readline())
+        thirst = int(load.readline())
+        time = int(load.readline())
+        beg_agressive = int(load.readline())
+        beg_passive = int(load.readline())
+        pants = load.readline()
+        shirt = load.readline()
+        if pants[0] == "T":
+          ripped_pants = True
+        else:
+          ripped_pants = False
+        if shirt[0] == "T":
+          ripped_shirt = True
+        else:
+          ripped_shirt = False
+        name = save_name
+        main_menu_bool = True
+        break
+      except FileNotFoundError:
+        print("-")
+        print("Hobo does not exist!")
+        break
+      except:
+        print("-")
+        print("Unknown Load error")
+        break
     elif main_menu_input == "3":
       main_menu_info()
     elif main_menu_input == "4":
-      break
+      print(x) #closes game because i have no fucking clue how to make it terminate LMAO
     else:
       main_menu()
 
@@ -457,6 +545,7 @@ while True:
     main()
 
   if hp <= 0 or hunger <= 0 or thirst <= 0:
+    print("-")
     print("You have died!")
     hp = 20
     money = 3
@@ -471,3 +560,22 @@ while True:
     beg_passive = 5
     beg_agressive = 8
     main_menu_bool = False
+  elif sanity <= 0:
+    sanity = 0
+    sanity += 3
+    hunger -= 4
+    thirst -+ 3
+    time += 3
+    print("-")
+    print("You pass out on the streets causing you to have bad sleep")
+    print("You gain 3 Sanity")
+    print("You lose 4 Hunger")
+    print("You lose 3 Thirst")
+    print("The Time is now " + str(time))
+  elif time >= 24:
+    time -= 24
+
+
+    
+
+    
