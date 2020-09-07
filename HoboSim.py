@@ -118,7 +118,7 @@ def beg_passively():
   print("You lose 1 Thirst")
   print("You lose 2 Sanity")
   print("The Time is now " + str(time))
-  main()
+  
 
 def beg_agressively():
   global time
@@ -177,8 +177,8 @@ def store_food():
   global burger
   global water
   global money
-  burger_cost = 8
-  water_cost = 8
+  burger_cost = 5
+  water_cost = 5
   print("-")
   print("You have " + str(money) + " Dollars!")
   print("You read a sign, it says Food")
@@ -217,8 +217,8 @@ def store_clothes():
   global ripped_shirt
   global beg_agressive
   global beg_passive
-  ripped_pants_cost = 75
-  ripped_shirt_cost = 60
+  ripped_pants_cost = 50
+  ripped_shirt_cost = 45
   print("-")
   print("You have " + str(money) + " Dollars!")
   print("You read a sign, it says Clothes")
@@ -240,11 +240,11 @@ def store_clothes():
     else:  #If doesnt have shirt and has enough money
       ripped_shirt = True
       money -= ripped_shirt_cost
-      beg_agressive += 2
-      beg_passive += 2
+      beg_agressive += 4
+      beg_passive += 4
       print("You buy a Ripped Shirt")
       print("You gain 1 Ripped Shirt")
-      print("You will now gain 2 more dollars when Begging!")
+      print("You will now gain 4 more dollars when Begging!")
       print("You lose " + str(ripped_shirt_cost) + " Dollars")
       store_clothes()
   elif player_input == "2" and money >= ripped_pants_cost:  #If has enough money for Pants
@@ -258,11 +258,11 @@ def store_clothes():
     else: #If doesnt have Pants and has enough money
       ripped_pants = True
       money -= ripped_pants_cost
-      beg_agressive += 2
-      beg_passive += 2
+      beg_agressive += 4
+      beg_passive += 4
       print("You buy a Ripped Pants")
       print("You gain 1 Ripped Pants")
-      print("You will now gain 2 more dollars when Begging!")
+      print("You will now gain 4 more dollars when Begging!")
       print("You lose " + str(ripped_pants_cost) + " Dollars")
       store_clothes()
   elif player_input == "3":  #Go back
@@ -275,8 +275,8 @@ def store_medical():
   global money
   global bandage
   global medkit
-  bandage_cost = 8
-  medkit_cost = 25
+  bandage_cost = 6
+  medkit_cost = 20
   print("-")
   print("You have " + str(money) + " Dollars!")
   print("You read a sign, it says Medical")
@@ -345,7 +345,7 @@ def backpack_food():
     print("1) Use Burger")
   print("2) Go Back")
   player_input = input()
-  if player_input == "1" and has_burger:
+  if player_input == "1" and has_burger and hunger < 26:
     burger -= 1
     hunger += 7
     has_burger = False
@@ -353,6 +353,11 @@ def backpack_food():
     print("You eat a Burger")
     print("You lose a Burger")
     print("You gain 7 Hunger")
+    backpack_food()
+  elif player_input == "1" and hunger > 25 and has_burger:
+    print("-")
+    print("You are not hungry")
+    backpack_food()
   elif player_input == "2":
     backpack()
   else:
@@ -371,7 +376,7 @@ def backpack_beverages():
     print("1) Use Water")
   print("2) Go Back")
   player_input = input()
-  if player_input == "1" and has_water:
+  if player_input == "1" and has_water and thirst < 26:
     water -= 1
     thirst += 5
     has_water = False
@@ -379,6 +384,11 @@ def backpack_beverages():
     print("You drink a Water")
     print("You lose a Water")
     print("You gain 5 Thirst")
+    backpack_beverages()
+  elif player_input == "1" and thirst > 25 and has_water:
+    print("-")
+    print("You are not thirsty")
+    backpack_beverages()
   elif player_input == "2":
     backpack()
   else:
@@ -404,7 +414,7 @@ def backpack_medical():
     print("2) Use Medkit")
   print("3) Go Back")
   player_input = input()
-  if player_input == "1" and has_bandage:
+  if player_input == "1" and has_bandage and hp < 17:
     bandage -= 1
     hp += 4
     has_bandage = False
@@ -412,7 +422,12 @@ def backpack_medical():
     print("You apply a Bandage")
     print("You lose a Bandage")
     print("You gain 4 Health")
-  elif player_input == "2" and has_medkit:
+    backpack_medical()
+  elif player_input == "1" and has_bandage and hp > 16:
+    print("-")
+    print("You do not need a Bandage")
+    backpack_medical()
+  elif player_input == "2" and has_medkit and hp < 5:
     medkit -= 1
     hp += 16
     has_medkit = False
@@ -420,6 +435,11 @@ def backpack_medical():
     print("You apply a Medkit")
     print("You lose a Medkiy")
     print("You gain 16 Health")
+    backpack_medical()
+  elif player_input == "2" and has_medkit and hp > 4:
+    print("-")
+    print("You do not need a Medkit")
+    backpack_medical()
   elif player_input == "3":
     backpack()
   else:
@@ -432,27 +452,35 @@ def sleep():
   global thirst
   global sanity
   if time <= 17 and time > 6:
-    time += 5
-    sanity += 5
-    hunger -= 4
-    thirst -= 3 
-    print("-")
-    print("You decide to sleep for the day")
-    print("You gain 5 Sanity")
-    print("You lose 4 Hunger")
-    print("You lose 3 Thrist")
-    print("The time is now " + str(time)) 
+    if sanity < 16:
+      time += 5
+      sanity += 5
+      hunger -= 4
+      thirst -= 3 
+      print("-")
+      print("You decide to sleep for the day")
+      print("You gain 5 Sanity")
+      print("You lose 4 Hunger")
+      print("You lose 3 Thrist")
+      print("The time is now " + str(time)) 
+    else:
+      print("-")
+      print("You are not tired")
   else:
-    time += 9
-    sanity += 9
-    hunger -= 5
-    thirst -= 4 
-    print("-")
-    print("You decide to sleep for the night")
-    print("You gain 9 Sanity")
-    print("You lose 5 Hunger")
-    print("You lose 4 Thrist")
-    print("The time is now " + str(time))
+    if sanity < 16:
+      time += 9
+      sanity += 9
+      hunger -= 5
+      thirst -= 4 
+      print("-")
+      print("You decide to sleep for the night")
+      print("You gain 9 Sanity")
+      print("You lose 5 Hunger")
+      print("You lose 4 Thrist")
+      print("The time is now " + str(time))
+    else:
+      print("-")
+      print("You are not tired")
 
 def save_game():
   global hp 
