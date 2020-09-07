@@ -95,17 +95,7 @@ def main():
   elif player_input == "6":
     save_game()
   elif player_input == "7":
-    print("-")
-    print("Are you sure you want to go to the Main Menu?")
-    print("You will lose any unsaved progress")
-    print("1) Yes")
-    print("2) No")
-    player_input = input()
-    if player_input == "1":
-      main_menu_bool = False
-      main_menu()
-    else:
-      main()
+    go_to_menu()
   else:
     main()  
 
@@ -243,6 +233,10 @@ def store_clothes():
       print("-")
       print("You already have a Ripped Shirt!")
       store_clothes()
+    elif not(ripped_shirt) and money < ripped_shirt_cost:
+      print("-")
+      print("You do not have enough Money to buy this item!")
+      store_clothes()
     else:  #If doesnt have shirt and has enough money
       ripped_shirt = True
       money -= ripped_shirt_cost
@@ -258,6 +252,9 @@ def store_clothes():
       print("-")
       print("You already have Ripped Pants!")
       store_clothes()
+    elif not(ripped_pants) and money < ripped_pants:
+      print("-")
+      print("You do not have enough Money to buy this item!")
     else: #If doesnt have Pants and has enough money
       ripped_pants = True
       money -= ripped_pants_cost
@@ -483,6 +480,22 @@ def save_game():
   if player_input == "1":
     save = open(name + ".txt", "w+")
     save.writelines([str(hp) + "\n", str(money) + "\n", str(burger) + "\n", str(water) + "\n", str(bandage) + "\n", str(medkit) + "\n", str(sanity) + "\n", str(hunger) + "\n", str(thirst) + "\n", str(time) + "\n", str(beg_passive) + "\n", str(beg_agressive) + "\n", str(ripped_pants) + "\n", str(ripped_shirt) + "\n", "CHANGING THE VALUES IN THIS FILE MAY LEAD TO UNEXPECTED RESULTS OR MAY CORRUPT YOUR SAVE FILE!"])
+    save.close()
+  
+def go_to_menu():
+  global main_menu_bool
+  print("-")
+  print("Are you sure you want to go to the Main Menu?")
+  print("You will lose any unsaved progress")
+  print("1) Yes")
+  print("2) No")
+  player_input = input()
+  if player_input == "1":
+    main_menu_bool = False
+  elif player_input == "2":
+    main()
+  else:
+    go_to_menu()
 
 while True:
   while not(main_menu_bool):
@@ -525,6 +538,7 @@ while True:
           ripped_shirt = False
         name = save_name
         main_menu_bool = True
+        load.close()
         break
       except FileNotFoundError:
         print("-")
@@ -537,7 +551,7 @@ while True:
     elif main_menu_input == "3":
       main_menu_info()
     elif main_menu_input == "4":
-      print(x) #closes game because i have no fucking clue how to make it terminate LMAO
+      exit(0)
     else:
       main_menu()
 
@@ -574,8 +588,3 @@ while True:
     print("The Time is now " + str(time))
   elif time >= 24:
     time -= 24
-
-
-    
-
-    
