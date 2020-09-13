@@ -14,6 +14,13 @@ beg_agressive = 8
 name = ""
 ripped_shirt = False
 ripped_pants = False
+cat = False
+dog = False
+rat = False
+cockroach = 0
+cup_of_change = False
+god_bless_sign = False
+bike = False
 main_menu_bool = False
 
 
@@ -49,7 +56,7 @@ def main_menu():
   ripped_shirt = False
   ripped_pants = False
   print("-")
-  print("Hobo Sim 0.01")
+  print("Hobo Sim 0.07")
   print("1) New Game")
   print("2) Load Game")
   print("3) Info")
@@ -159,7 +166,9 @@ def go_to_store():
     print("1) Food and Beverages")
     print("2) Clothes")
     print("3) Medical")
-    print("4) Leave Torgot")
+    print("4) Props")
+    print("5) Pets")
+    print("6) Leave Torgot")
     player_input = input()
     if player_input == "1": #Food
       store_food()
@@ -167,7 +176,11 @@ def go_to_store():
       store_clothes()
     elif player_input == "3": #Medical
       store_medical()
-    elif player_input == "4": #Leave Store (takes 1 hour)
+    elif player_input == "4": #Props
+      store_props()
+    elif player_input == "5":
+      store_pets()
+    elif player_input == "6": #Leave Store (takes 1 hour)
       time += 1
     else:
       go_to_store()
@@ -255,6 +268,7 @@ def store_clothes():
     elif not(ripped_pants) and money < ripped_pants:
       print("-")
       print("You do not have enough Money to buy this item!")
+      store_clothes()
     else: #If doesnt have Pants and has enough money
       ripped_pants = True
       money -= ripped_pants_cost
@@ -269,7 +283,6 @@ def store_clothes():
     go_to_store()
   else:  #Invalid command
     store_clothes()
-
 
 def store_medical():
   global money
@@ -311,7 +324,189 @@ def store_medical():
   else:   #Invalid command
     store_medical()
 
+def store_props():
+  global money
+  global god_bless_sign
+  global cup_of_change
+  global bike
+  global beg_passive
+  global beg_agressive
+  god_bless_sign_cost = 25
+  cup_of_change_cost = 35
+  bike_cost = 100
+  print("-")
+  print("You have " + str(money) + " Dollars!")
+  print("You read a sign, it says Props")
+  print("You assume you are now in the props section of the store")
+  print("What will you do?")
+  print("1) Buy God Bless Sign")
+  print("2) Buy Cup Of Change")
+  print("3) Buy Bike")
+  print("4) Go Back")
+  player_input = input()
+  if player_input == "1" and money >= god_bless_sign_cost:  #If has enough money for God Bless Sign
+    if god_bless_sign:  #If already have God Bless Sign
+      print("-")
+      print("You already have a God Bless Sign!")
+      store_props()
+    elif not(god_bless_sign) and money < god_bless_sign_cost:
+      print("-")
+      print("You do not have enough Money to buy this item!")
+      store_props()
+    else:  #If doesnt have god bless sign and has enough money
+      god_bless_sign = True
+      money -= god_bless_sign_cost
+      beg_agressive += 1
+      beg_passive += 1
+      print("You buy a God Bless Sign")
+      print("You gain 1 God Bless Sign")
+      print("You will now gain 1 more dollar when Begging!")
+      print("You lose " + str(god_bless_sign_cost) + " Dollars")
+      store_props()
+  elif player_input == "2" and money >= cup_of_change_cost:  #If has enough money for Cup of Change
+    if cup_of_change: #If already have Cup of Change
+      print("-")
+      print("You already have a Cup of Change")
+      store_props()
+    elif not(cup_of_change) and money < cup_of_change_cost:
+      print("-")
+      print("You do not have enough Money to buy this item!")
+      store_props()
+    else: #If doesnt have Cup of Change and has enough money
+      cup_of_change = True
+      money -= cup_of_change_cost
+      beg_agressive += 2
+      beg_passive += 2
+      print("You buy a Cup of Change")
+      print("You gain 1 Cup of Change")
+      print("You will now gain 2 more dollars when Begging!")
+      print("You lose " + str(cup_of_change_cost) + " Dollars")
+      store_props()
+  elif player_input == "3" and money >= bike_cost:  #If has enough money for Bike
+    if cup_of_change: #If already have Bike
+      print("-")
+      print("You already have a Bike")
+      store_props()
+    elif not(bike) and money < bike_cost:
+      print("-")
+      print("You do not have enough Money to buy this item!")
+      store_props()
+    else: #If doesnt have Bike and has enough money
+      bike = True
+      money -= bike_cost
+      beg_agressive += 4
+      beg_passive += 4
+      print("You buy a Bike")
+      print("You gain 1 Bike")
+      print("You will now gain 4 more dollars when Begging!")
+      print("You lose " + str(bike_cost) + " Dollars")
+      store_props()
+  elif player_input == "4":  #Go back
+    go_to_store()
+  else:  #Invalid command
+    store_props()
 
+def store_pets():
+  global money
+  global dog
+  global cat
+  global rat
+  global cockroach
+  global beg_passive
+  global beg_agressive
+  dog_cost = 85
+  cat_cost = 35
+  rat_cost = 15
+  cockroach_cost = 1
+  print("-")
+  print("You have " + str(money) + " Dollars!")
+  print("You read a sign, it says Pets")
+  print("You assume you are now in the pets section of the store")
+  print("What will you do?")
+  print("1) Buy Dog")
+  print("2) Buy Cat")
+  print("3) Buy Rat")
+  print("4) Buy Cockroach")
+  print("5) Go Back")
+  player_input = input()
+  if player_input == "1" and money >= dog_cost:  #If has enough money for Dog
+    if dog:  #If already have Dog
+      print("-")
+      print("You already have a Dog!")
+      store_pets()
+    elif not(dog) and money < dog_cost:
+      print("-")
+      print("You do not have enough Money to buy this item!")
+      store_pets()
+    else:  #If doesnt have Dog and has enough money
+      dog = True
+      money -= dog_cost
+      beg_agressive += 4
+      beg_passive += 4
+      print("You buy a Dog")
+      print("You gain 1 Dog")
+      print("You will now gain 4 more dollars when Begging!")
+      print("You lose " + str(dog_cost) + " Dollars")
+      store_pets()
+  elif player_input == "2" and money >= cat_cost:  #If has enough money for cat
+    if cat:  #If already have cat
+      print("-")
+      print("You already have a Cat!")
+      store_pets()
+    elif not(cat) and money < cat_cost:
+      print("-")
+      print("You do not have enough Money to buy this item!")
+      store_pets()
+    else:  #If doesnt have cat and has enough money
+      cat = True
+      money -= cat_cost
+      beg_agressive += 3
+      beg_passive += 3
+      print("You buy a Cat")
+      print("You gain 1 Cat")
+      print("You will now gain 3 more dollar when Begging!")
+      print("You lose " + str(cat_cost) + " Dollars")
+      store_pets()
+  elif player_input == "3" and money >= rat_cost:  #If has enough money for rat
+    if rat:  #If already have rat
+      print("-")
+      print("You already have a Rat!")
+      store_pets()
+    elif not(rat) and money < rat_cost:
+      print("-")
+      print("You do not have enough Money to buy this item!")
+      store_pets()
+    else:  #If doesnt have rat and has enough money
+      rat = True
+      money -= rat_cost
+      beg_agressive += 2
+      beg_passive += 2
+      print("You buy a Rat")
+      print("You gain 1 Rat")
+      print("You will now gain 2 more dollars when Begging!")
+      print("You lose " + str(rat_cost) + " Dollars")
+      store_pets()
+  elif player_input == "4" and money >= cockroach_cost:  #If has enough money for Cockroach
+    if cockroach == 2:  #If already have 2 cockroaches
+      print("-")
+      print("You already have 2 Cockroaches!")
+      store_pets()
+    elif cockroach < 2 and money < cockroach_cost:
+      print("-")
+      print("You do not have enough Money to buy this item!")
+      store_pets()
+    else:  #If doesnt have cockroach and has enough money
+      cockroach += 1
+      money -= cockroach_cost
+      beg_agressive += 1
+      beg_passive += 1
+      print("You buy a Cockroach")
+      print("You gain 1 Cockroach")
+      print("You will now gain 1 more dollar when Begging!")
+      print("You lose " + str(cockroach_cost) + " Dollars")
+      store_pets()
+  
+  
 def backpack():
   print("-")
   print("You open your backpack, somehow it orginizes itself into different sections")
@@ -507,7 +702,7 @@ def save_game():
   player_input = input()
   if player_input == "1":
     save = open(name + ".txt", "w+")
-    save.writelines([str(hp) + "\n", str(money) + "\n", str(burger) + "\n", str(water) + "\n", str(bandage) + "\n", str(medkit) + "\n", str(sanity) + "\n", str(hunger) + "\n", str(thirst) + "\n", str(time) + "\n", str(beg_passive) + "\n", str(beg_agressive) + "\n", str(ripped_pants) + "\n", str(ripped_shirt) + "\n", "CHANGING THE VALUES IN THIS FILE MAY LEAD TO UNEXPECTED RESULTS OR MAY CORRUPT YOUR SAVE FILE!"])
+    save.writelines([str(hp) + "\n", str(money) + "\n", str(burger) + "\n", str(water) + "\n", str(bandage) + "\n", str(medkit) + "\n", str(sanity) + "\n", str(hunger) + "\n", str(thirst) + "\n", str(time) + "\n", str(beg_passive) + "\n", str(beg_agressive) + "\n", str(cockroach) + "\n", str(ripped_pants) + "\n", str(ripped_shirt) + "\n", str(cat) + "\n", str(dog) + "\n", str(rat) + "\n", str(cup_of_change) + "\n", str(god_bless_sign) + "\n", str(bike) + "\n", "CHANGING THE VALUES IN THIS FILE MAY LEAD TO UNEXPECTED RESULTS OR MAY CORRUPT YOUR SAVE FILE!"])
     save.close()
   
 def go_to_menu():
@@ -534,6 +729,27 @@ while True:
       name = input()
       name = name.lower()
       main_menu_bool = True
+      hp = 20
+      money = 3
+      burger = 2
+      water = 1
+      bandage = 0
+      medkit = 0
+      sanity = 10
+      hunger = 20
+      thirst = 15
+      time = 12
+      beg_passive = 5
+      beg_agressive = 8
+      ripped_shirt = False
+      ripped_pants = False
+      cat = False
+      dog = False
+      rat = False
+      cockroach = 0
+      cup_of_change = False
+      god_bless_sign = False
+      bike = False
       break
     if main_menu_input == "2":
       print("-")
@@ -552,10 +768,17 @@ while True:
         hunger = int(load.readline())
         thirst = int(load.readline())
         time = int(load.readline())
-        beg_agressive = int(load.readline())
         beg_passive = int(load.readline())
+        beg_agressive = int(load.readline())
+        cockroach = int(load.readline())
         pants = load.readline()
         shirt = load.readline()
+        cat = load.readline()
+        dog = load.readline()
+        rat = load.readline()
+        cup_of_change = load.readline()
+        god_bless_sign = load.readline()
+        bike = load.readline()
         if pants[0] == "T":
           ripped_pants = True
         else:
@@ -567,6 +790,30 @@ while True:
         name = save_name
         main_menu_bool = True
         load.close()
+        if cat[0] == "T":
+          cat = True
+        else:
+          cat = False
+        if dog[0] == "T":
+          dog = True
+        else:
+          dog = False
+        if rat[0] == "T":
+          rat = True
+        else:
+          rat = False
+        if cup_of_change[0] == "T":
+          cup_of_change = True
+        else:
+          cup_of_change = False
+        if god_bless_sign[0] == "T":
+          god_bless_sign = True
+        else:
+          god_bless_sign = False
+        if bike[0] == "T":
+          bike = True
+        else:
+          bike = False
         break
       except FileNotFoundError:
         print("-")
