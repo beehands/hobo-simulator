@@ -23,7 +23,6 @@ god_bless_sign = False
 bike = False
 main_menu_bool = False
 
-
 def main_menu():
   global hp 
   global money
@@ -180,8 +179,8 @@ def go_to_store():
       store_props()
     elif player_input == "5":
       store_pets()
-    elif player_input == "6": #Leave Store (takes 1 hour)
-      time += 1
+    elif player_input == "6": #Leave Store 
+      main()
     else:
       go_to_store()
       
@@ -429,7 +428,7 @@ def store_pets():
   print("4) Buy Cockroach")
   print("5) Go Back")
   player_input = input()
-  if player_input == "1" and money >= dog_cost:  #If has enough money for Dog
+  if player_input == "1":  #If has enough money for Dog
     if dog:  #If already have Dog
       print("-")
       print("You already have a Dog!")
@@ -448,7 +447,7 @@ def store_pets():
       print("You will now gain 4 more dollars when Begging!")
       print("You lose " + str(dog_cost) + " Dollars")
       store_pets()
-  elif player_input == "2" and money >= cat_cost:  #If has enough money for cat
+  elif player_input == "2":  #If has enough money for cat
     if cat:  #If already have cat
       print("-")
       print("You already have a Cat!")
@@ -467,12 +466,12 @@ def store_pets():
       print("You will now gain 3 more dollar when Begging!")
       print("You lose " + str(cat_cost) + " Dollars")
       store_pets()
-  elif player_input == "3" and money >= rat_cost:  #If has enough money for rat
+  elif player_input == "3":  #If has enough money for rat
     if rat:  #If already have rat
       print("-")
       print("You already have a Rat!")
       store_pets()
-    elif not(rat) and money < rat_cost:
+    elif not(rat) and money < rat_cost: #If doesnt have rat and doesnt have enough for rat
       print("-")
       print("You do not have enough Money to buy this item!")
       store_pets()
@@ -486,7 +485,7 @@ def store_pets():
       print("You will now gain 2 more dollars when Begging!")
       print("You lose " + str(rat_cost) + " Dollars")
       store_pets()
-  elif player_input == "4" and money >= cockroach_cost:  #If has enough money for Cockroach
+  elif player_input == "4":  #If has enough money for Cockroach
     if cockroach == 2:  #If already have 2 cockroaches
       print("-")
       print("You already have 2 Cockroaches!")
@@ -836,18 +835,6 @@ while True:
   if hp <= 0 or hunger <= 0 or thirst <= 0:
     print("-")
     print("You have died!")
-    hp = 20
-    money = 3
-    burger = 2
-    water = 1
-    bandage = 0
-    medkit = 0
-    sanity = 10
-    hunger = 20
-    thirst = 15
-    time = 12
-    beg_passive = 5
-    beg_agressive = 8
     main_menu_bool = False
   elif sanity <= 0:
     sanity = 0
